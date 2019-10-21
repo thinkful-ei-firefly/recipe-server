@@ -4,7 +4,7 @@ CREATE TABLE recipes(
   name TEXT NOT NULL,
   ingregients TEXT[],
   instructions TEXT[],
-  date_added DATE DEFAULT GETDATE(),
+  date_added DATE DEFAULT CURRENT_TIMESTAMP,
   time_to_make INTEGER
 );
 /*
