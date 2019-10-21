@@ -10,6 +10,7 @@ const jsonBodyParser = express.json();
 usersRouter
   .post('/', jsonBodyParser, (req, res, next) => {
     const { password, user_name } = req.body;
+    console.log('password is '+password)
     const requiredFields = ['user_name', 'password'];
 
     for(const field of requiredFields) {
@@ -31,8 +32,7 @@ usersRouter
           .then(hashedPassword => {
             const newUser = {
               user_name,
-              password: hashedPassword,
-              date_created: 'now()'
+              password: hashedPassword
             }
             return UsersService.insertUser(req.app.get('db'), newUser)
               .then(user => {
