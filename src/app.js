@@ -7,11 +7,16 @@ const helmet = require('helmet');
 const app = express();
 const { NODE_ENV } = require('./config')
 
-const morganOption = (NODE_ENV === 'production') ? 'tiny' : 'common';
+const authRouter = require('./auth/auth-router');
+const usersRouter = require('./users/users-router');
 
+const morganOption = (NODE_ENV === 'production') ? 'tiny' : 'common';
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
+
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
 
 app.get('/', (req, res) => {
   res.send('TEST')
@@ -19,7 +24,7 @@ app.get('/', (req, res) => {
 
 app.use(function errorHandler(error, req, res, next) {
   let response
-  if (Node_ENV === 'production') {
+  if (NODE_ENV === 'production') {
     response = { error: { message: 'server error' } };
   } else {
     console.error(error);
