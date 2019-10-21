@@ -63,6 +63,18 @@ INSERT INTO recipes(id, owner, name, ingregients, instructions, time_to_make) VA
     4
   );
 
+INSERT INTO ingredients(id, owner, food) VALUES
+  (
+    1,
+    2,
+    '{{"food item", "food item"},{"2019-10-01", 32}}'
+  ),
+  (
+    2,
+    1,
+    '{{"food item 1", "food item 1"},{"2019-10-02", 30}}'
+  );
+
 SELECT setval('users_id_seq', (SELECT MAX(id) from "users"));
 SELECT setval('recipes_id_seq', (SELECT MAX(id) from "recipes"));
 SELECT setval('ingredients_id_seq', (SELECT MAX(id) from "ingredients"));
