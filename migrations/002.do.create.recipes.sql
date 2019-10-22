@@ -2,7 +2,7 @@ CREATE TABLE recipes(
   id SERIAL PRIMARY KEY,
   owner INTEGER REFERENCES users(id),
   name TEXT NOT NULL,
-  ingregients TEXT[],
+  ingredients TEXT[],
   instructions TEXT[],
   date_added DATE DEFAULT CURRENT_TIMESTAMP,
   time_to_make INTEGER
