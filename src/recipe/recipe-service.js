@@ -5,7 +5,7 @@
 const RecipeService = {
   getUsersRecipes(db, user_id) {
     return db('recipes')
-      .select('id', 'name', 'time_to_make')
+      .select('id', 'name', 'time_to_make', 'category', 'description')
       .where({ owner: user_id })
   },
   getRecipeById(db, id) {
