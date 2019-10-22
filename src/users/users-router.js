@@ -42,7 +42,7 @@ usersRouter
                 res
                   .status(201)
                   .location(path.posix.join(req.originalUrl, `/${user.id}`))
-                  .json({ authToken: AuthService.createJwt(subject, payload), id: userInfo.id})
+                  .json({ authToken: AuthService.createJwt(subject, payload), id: userInfo.id, user_name: userInfo.user_name})
               })
           })
       })

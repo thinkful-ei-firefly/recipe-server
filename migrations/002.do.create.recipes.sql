@@ -4,7 +4,7 @@ CREATE TABLE recipes(
   name TEXT NOT NULL,
   category TEXT,
   description TEXT,
-  ingregients TEXT[],
+  ingredients TEXT[],
   instructions TEXT[],
   date_added DATE DEFAULT CURRENT_TIMESTAMP,
   time_to_make INTEGER

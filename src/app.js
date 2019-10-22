@@ -9,6 +9,7 @@ const { NODE_ENV } = require('./config')
 
 const authRouter = require('./auth/auth-router');
 const usersRouter = require('./users/users-router');
+const recipeRouter = require('./recipe/recipe-router');
 
 const morganOption = (NODE_ENV === 'production') ? 'tiny' : 'common';
 app.use(morgan(morganOption));
@@ -17,6 +18,7 @@ app.use(cors());
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/recipes', recipeRouter)
 
 app.get('/', (req, res) => {
   res.send('TEST')
