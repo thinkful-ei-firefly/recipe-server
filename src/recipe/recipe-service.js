@@ -17,6 +17,7 @@ const RecipeService = {
       {owner: id,
       name: object.name,
       category: object.category,
+      description: object.description,
       ingredients: object.ingredients,
       instructions: object.instructions,
       time_to_make: object.time_to_make}
@@ -28,8 +29,11 @@ const RecipeService = {
       ret.push(db('recipes').where({id}))
     })
     return ret
+  },
+  getUser(db, id){
+    return db('users')
+      .where({id})
   }
-
 }
 
 module.exports = RecipeService

@@ -3,6 +3,7 @@ CREATE TABLE recipes(
   owner INTEGER REFERENCES users(id),
   name TEXT NOT NULL,
   category TEXT,
+  description TEXT,
   ingregients TEXT[],
   instructions TEXT[],
   date_added DATE DEFAULT CURRENT_TIMESTAMP,
