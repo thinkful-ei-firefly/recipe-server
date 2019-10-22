@@ -17,9 +17,9 @@ text array setup: [step 1, step 2, etc]
 CREATE TABLE ingredients(
   id SERIAL PRIMARY KEY,
   owner INTEGER REFERENCES users(id),
-  food TEXT[]
+  name TEXT NOT NULL,
+  amount INT NOT NULL,
+  unit TEXT NOT NULL,
+  date_added DATE DEFAULT CURRENT_TIMESTAMP
 );
-/*
-food array setup: [{food name, date added, amount}, {food name, date added, amount}]
-*/
 

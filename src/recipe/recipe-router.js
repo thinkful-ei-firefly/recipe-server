@@ -45,8 +45,8 @@ recipeRouter
       })
       .catch(next)
   })
-  .delete((req, res, next) => {
-    RecipeService.deleteRecipe(req.app.get('db'), req.params.id)
+  .delete(requireAuth, (req, res, next) => {
+    RecipeService.deleteRecipe(req.app.get('db'), req.params.id, req.user.id)
       .then((deleted) => {
         if (!deleted) return res.status(404).json({ error: 'Found no recipe with that id' })
         return res.status(204).end()
@@ -62,7 +62,7 @@ recipeRouter
         recipe[key] = xss(unverifiedRecipe[key])
       }
     })
-    RecipeService.editRecipe(req.app.get('db'), req.params.id, recipe)
+    RecipeService.editRecipe(req.app.get('db'), req.params.id, req.user.id, recipe)
       .then((edited) => {
         console.log(edited)
         if (!edited) return res.status(404).json({ error: 'Found no recipe with that id' })
