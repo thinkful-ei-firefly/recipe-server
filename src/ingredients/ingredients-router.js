@@ -35,4 +35,32 @@ ingredientsRouter
       .catch(next)
   })
 
+ingredientsRouter
+  .route('/:id')
+  .delete(requireAuth, (req,res, next) => {
+    IngredientsService.removeIngredient(req.app.get('db'), req.params.id, req.user.id)
+      .then((deleted) => {
+        if (!deleted) return res.status(404).json({ error: 'Found no ingredient with that id' })
+        return res.status(204).end()
+      })
+      .catch(next)
+  })
+  .patch(requireAuth, jsonBodyParser, (req, res, next) => {
+    const unverifiedIngredient = req.body;
+    let ingredient = {}
+    const possibleKeys = ['name', 'amount', 'unit']
+    possibleKeys.forEach(key => {
+      if (key in req.body) {
+        ingredient[key] = xss(unverifiedIngredient[key])
+      }
+    })
+    IngredientsService.editIngredient(req.app.get('db'), req.params.id, req.user.id, ingredient)
+      .then((edited) => {
+        console.log(edited)
+        if (!edited) return res.status(404).json({ error: 'Found no ingredient with that id' })
+        return res.status(204).end()
+      })
+      .catch(next)
+  })
+
   module.exports = ingredientsRouter;

@@ -44,7 +44,7 @@ recipeRouter
       })
       .catch(next)
   })
-  .delete((req, res, next) => {
+  .delete(requireAuth, (req, res, next) => {
     RecipeService.deleteRecipe(req.app.get('db'), req.params.id, req.user.id)
       .then((deleted) => {
         if (!deleted) return res.status(404).json({ error: 'Found no recipe with that id' })

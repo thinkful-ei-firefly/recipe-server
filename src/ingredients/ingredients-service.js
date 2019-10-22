@@ -15,7 +15,12 @@ const IngredientsService = {
     return db('ingredients')
       .delete()
       .where({ id, owner: user_id })
-  }
+  },
+  editIngredient(db, id, user_id, newInfo) {
+    return db('ingredients')
+      .update(newInfo)
+      .where({ id, owner: user_id })
+  },
 }
 
 module.exports = IngredientsService
