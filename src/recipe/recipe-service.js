@@ -27,15 +27,15 @@ const RecipeService = {
       .returning('*')
       .then(recipe => recipe[0])
   },
-  deleteRecipe(db, id) {
+  deleteRecipe(db, id, user_id) {
     return db('recipes')
       .delete()
-      .where({ id })
+      .where({ id, owner: user_id })
   },
-  editRecipe(db, id, newInfo) {
+  editRecipe(db, id, user_id, newInfo) {
     return db('recipes')
       .update(newInfo)
-      .where({ id })
+      .where({ id, owner: user_id })
   },
 }
 

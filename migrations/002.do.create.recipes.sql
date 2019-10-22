@@ -22,7 +22,4 @@ CREATE TABLE ingredients(
   unit TEXT NOT NULL,
   date_added DATE DEFAULT CURRENT_TIMESTAMP
 );
-/*
-food array setup: [{food name, date added, amount}, {food name, date added, amount}]
-*/
 

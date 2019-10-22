@@ -10,6 +10,11 @@ const IngredientsService = {
       .insert(ingredient)
       .returning('*')
       .then(ingredients => ingredients[0])
+  },
+  removeIngredient(db, id, user_id) {
+    return db('ingredients')
+      .delete()
+      .where({ id, owner: user_id })
   }
 }
 
