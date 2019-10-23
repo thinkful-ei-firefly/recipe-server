@@ -34,7 +34,7 @@ function makeRecipeArray(){
       id: 1,
       owner: 1,
       name: 'Food 1',
-      ingregients: '{"Ingredient 1" , "Ingredient 2"}',
+      ingredients: '{"Ingredient 1" , "Ingredient 2"}',
       instructions: '{"Instruction 1" , "Instruction 2"}',
       time_to_make: 4
     },
@@ -42,7 +42,7 @@ function makeRecipeArray(){
       id: 2,
       owner: 2,
       name: 'Food 2',
-      ingregients: '{"Ingredient 2-1" , "Ingredient 2-2"}',
+      ingredients: '{"Ingredient 2-1" , "Ingredient 2-2"}',
       instructions: '{"Instruction 2-1" , "Instruction 2-2"}',
       time_to_make: 2
     }
