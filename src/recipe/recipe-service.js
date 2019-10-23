@@ -1,7 +1,3 @@
-/**
- * Needs testing
- */
-
 const RecipeService = {
   getUsersRecipes(db, user_id) {
     return db('recipes')
@@ -13,7 +9,7 @@ const RecipeService = {
       .where({id})
       .first()
   },
-  getAllRecipes(db, index){
+  getAllRecipes(db){
     return db('recipes')
       .select('*')
   },
