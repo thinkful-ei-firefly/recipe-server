@@ -9,7 +9,8 @@
     "test": "mocha --require test/setup.js",
     "migrate": "postgrator --config postgrator-config.js",
     "predeploy": "npm audit",
-    "deploy": "git push heroku master"
+    "deploy": "git push heroku master",
+    "migrate:production": "env SSL=true DATABASE_URL=$(heroku config:get DATABASE_URL) npm run migrate"
   },
   "keywords": [],
   "engines": {
