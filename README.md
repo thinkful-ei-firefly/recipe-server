@@ -1,3 +1,8 @@
+server repo: https://github.com/thinkful-ei-firefly/recipe-server
+client repo: https://github.com/thinkful-ei-firefly/recipe-client
+Live app: https://good-meal-client.herokuapp.com/
+
+
 # Express Boilerplate!
 
 This is a boilerplate project used for starting new projects!
