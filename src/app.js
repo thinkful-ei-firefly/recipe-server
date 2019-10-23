@@ -11,6 +11,7 @@ const authRouter = require('./auth/auth-router');
 const usersRouter = require('./users/users-router');
 const recipeRouter = require('./recipe/recipe-router');
 const ingredientsRouter = require('./ingredients/ingredients-router');
+const shoppingListRouter = require('./shopping-list/shopping-list-router');
 
 const morganOption = (NODE_ENV === 'production') ? 'tiny' : 'common';
 app.use(morgan(morganOption));
@@ -21,6 +22,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/recipes', recipeRouter);
 app.use('/api/ingredients', ingredientsRouter);
+app.use('/api/list', shoppingListRouter)
 
 
 app.get('/', (req, res) => {

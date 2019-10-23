@@ -1,0 +1,7 @@
+CREATE TABLE shopping_list (
+	id SERIAL PRIMARY KEY,
+	owner INTEGER REFERENCES users(id),
+	name TEXT NOT NULL,
+  crossed BOOLEAN DEFAULT FALSE,
+  date_added DATE DEFAULT CURRENT_TIMESTAMP
+);
