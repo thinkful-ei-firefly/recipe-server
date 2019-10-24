@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 const { NODE_ENV } = require('./config')
@@ -12,18 +13,20 @@ const usersRouter = require('./users/users-router');
 const recipeRouter = require('./recipe/recipe-router');
 const ingredientsRouter = require('./ingredients/ingredients-router');
 const shoppingListRouter = require('./shopping-list/shopping-list-router');
+const uploadRouter = require('./recipe/upload-aws')
 
 const morganOption = (NODE_ENV === 'production') ? 'tiny' : 'common';
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
+app.use(fileUpload());
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/recipes', recipeRouter);
 app.use('/api/ingredients', ingredientsRouter);
 app.use('/api/list', shoppingListRouter)
-
+app.use('/api/upload', uploadRouter);
 
 app.get('/', (req, res) => {
   res.send('TEST')
