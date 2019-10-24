@@ -15,14 +15,22 @@ shoppingListRouter
       .catch(next)
   })
   .post(requireAuth, jsonBodyParser, (req, res, next) => {
-    if (!req.body.name) {
-      return res.status(400).json({ error: 'your request must have a name key' })
-    }
-    const item = {
-      name: xss(req.body.name),
+    const unverifiedIngredient = req.body
+    const requiredKeys = ['name', 'amount', 'unit']
+    requiredKeys.forEach(key => {
+      if (!(key in req.body)) {
+        return res.status(400).json({ error: 'Request body must include '+key})
+      }
+    })
+    const newIngredient = {
       owner: req.user.id
     }
-    ShoppingListService.addItem(req.app.get('db'), item)
+    requiredKeys.forEach(key => {
+      if (key in req.body) {
+        newIngredient[key] = xss(unverifiedIngredient[key])
+      }
+    })
+    ShoppingListService.addItem(req.app.get('db'), newIngredient)
       .then(item => res.json(item))
       .catch(next)
   })  
