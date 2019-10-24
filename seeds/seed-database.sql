@@ -74,7 +74,7 @@ INSERT INTO recipes(id, owner, name, ingredients, instructions, time_to_make) VA
     2,
     1,
     '{{"food item 1", "food item 1"},{"2019-10-02", 30}}'
-  );*/
+  );
 
 
 INSERT INTO shopping_list(id, owner, name) VALUES
@@ -92,7 +92,7 @@ INSERT INTO shopping_list(id, owner, name) VALUES
   3,
   1,
   'shoping 3'
-);
+);*/
 
   /*CREATE TABLE shopping_list (
   	id SERIAL PRIMARY KEY,

@@ -16,7 +16,7 @@ recipeRouter
   })
   .post(requireAuth, jsonBodyParser, (req, res, next) => {
     const unverifiedRecipe = req.body;
-    const requiredKeys = ['name', 'ingredients', 'instructions', 'time_to_make', 'category', 'description']
+    const requiredKeys = ['name', 'ingredients', 'instructions', 'time_to_make', 'imageurl', 'public', 'category', 'description']
     requiredKeys.forEach(key => {
       if (!(key in req.body)) {
         return res.status(400).json({ error: 'Request body must include '+key})
