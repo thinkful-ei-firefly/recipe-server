@@ -3,7 +3,8 @@ BEGIN;
 TRUNCATE
   "users",
   "recipes",
-  "ingredients";
+  "ingredients",
+  "shopping_list";
 
 INSERT INTO users(id, user_name, password) VALUES
   (
@@ -19,7 +20,7 @@ INSERT INTO users(id, user_name, password) VALUES
     '$2a$10$fCWkaGbt7ZErxaxclioLteLUgg4Q3Rp09WW0s/wSLxDKYsaGYUpjG'
   );
 
-INSERT INTO recipes(id, owner, name, ingregients, instructions, time_to_make) VALUES
+INSERT INTO recipes(id, owner, name, ingredients, instructions, time_to_make) VALUES
   (
     1,
     1,
@@ -63,7 +64,7 @@ INSERT INTO recipes(id, owner, name, ingregients, instructions, time_to_make) VA
     4
   );
 
-INSERT INTO ingredients(id, owner, food) VALUES
+/*INSERT INTO ingredients(id, owner, food) VALUES
   (
     1,
     2,
@@ -73,10 +74,37 @@ INSERT INTO ingredients(id, owner, food) VALUES
     2,
     1,
     '{{"food item 1", "food item 1"},{"2019-10-02", 30}}'
-  );
+  );*/
+
+
+INSERT INTO shopping_list(id, owner, name) VALUES
+(
+  1,
+  2,
+  'shoping 1'
+),
+(
+  2,
+  1,
+  'shoping 2'
+),
+(
+  3,
+  1,
+  'shoping 3'
+);
+
+  /*CREATE TABLE shopping_list (
+  	id SERIAL PRIMARY KEY,
+  	owner INTEGER REFERENCES users(id),
+  	name TEXT NOT NULL,
+    crossed BOOLEAN DEFAULT FALSE,
+    date_added DATE DEFAULT CURRENT_TIMESTAMP
+  );*/
 
 SELECT setval('users_id_seq', (SELECT MAX(id) from "users"));
 SELECT setval('recipes_id_seq', (SELECT MAX(id) from "recipes"));
 SELECT setval('ingredients_id_seq', (SELECT MAX(id) from "ingredients"));
+SELECT setval('shopping_list_id_seq', (SELECT MAX(id) from "shopping_list"));
 
 COMMIT;
