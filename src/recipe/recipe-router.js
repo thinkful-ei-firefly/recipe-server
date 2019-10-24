@@ -71,4 +71,12 @@ recipeRouter
       .catch(next)
   })
 
+  recipeRouter
+    .route('/public')
+    .get((req, res, next) => {
+      RecipeService.getAllRecipes(req.app.get('db'))
+        .then(recipes => res.json(recipes))
+        .catch(next)
+    })
+
   module.exports = recipeRouter;
