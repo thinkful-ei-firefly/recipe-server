@@ -3,7 +3,7 @@ CREATE TABLE recipes(
   owner INTEGER REFERENCES users(id),
   name TEXT NOT NULL,
   public BOOL DEFAULT FALSE,
-  cuisine TEXT,
+  category TEXT,
   imageURL TEXT,
   description TEXT,
   ingredients TEXT[],
