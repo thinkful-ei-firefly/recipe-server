@@ -34,6 +34,13 @@ ingredientsRouter
       .then(ingredient => res.json(ingredient))
       .catch(next)
   })
+  .delete(requireAuth, (req,res, next) => {
+    IngredientsService.deleteUsersIngredients(req.app.get('db'), req.user.id)
+      .then((deleted) => {
+        return res.status(204).end()
+      })
+      .catch(next)
+  })
 
 ingredientsRouter
   .route('/:id')

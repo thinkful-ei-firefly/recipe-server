@@ -21,6 +21,11 @@ const IngredientsService = {
       .update(newInfo)
       .where({ id, owner: user_id })
   },
+  deleteUsersIngredients(db, user_id) {
+    return db('ingredients')
+      .delete()
+      .where({ owner: user_id })
+  }
 }
 
 module.exports = IngredientsService
