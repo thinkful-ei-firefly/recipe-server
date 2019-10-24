@@ -4,7 +4,7 @@ CREATE TABLE recipes(
   name TEXT NOT NULL,
   public BOOL DEFAULT FALSE,
   category TEXT,
-  imageURL TEXT,
+  imageurl TEXT,
   description TEXT,
   ingredients TEXT[],
   instructions TEXT[],

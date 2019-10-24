@@ -1,12 +1,12 @@
 const RecipeService = {
   getUsersRecipes(db, user_id) {
     return db('recipes')
-      .select('id', 'name', 'time_to_make', 'category', 'description', 'imageURL')
+      .select('id', 'name', 'time_to_make', 'category', 'description', 'imageurl')
       .where({ owner: user_id })
   },
   getPuplic(db){
     return db('recipes')
-      .select('id', 'name', 'time_to_make', 'category', 'description', 'imageURL')
+      .select('id', 'name', 'time_to_make', 'category', 'description', 'imageurl')
       .where({public: true})
   },
   getRecipeById(db, id) {
