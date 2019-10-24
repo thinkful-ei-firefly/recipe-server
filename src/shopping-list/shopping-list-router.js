@@ -23,7 +23,7 @@ shoppingListRouter
       owner: req.user.id
     }
     ShoppingListService.addItem(req.app.get('db'), item)
-      .then(item => res.status(204).end())
+      .then(item => res.json(item))
       .catch(next)
   })  
   .delete(requireAuth, (req, res, next) => {
