@@ -37,6 +37,14 @@ recipeRouter
       .catch(next)
   })
 
+  recipeRouter
+    .route('/public')
+    .get((req, res, next) => {
+      RecipeService.getPublic(req.app.get('db'))
+        .then(recipes => res.json(recipes))
+        .catch(next)
+    })
+
 recipeRouter
   .route('/:id')
   .get((req, res, next) => {
@@ -72,13 +80,5 @@ recipeRouter
       })
       .catch(next)
   })
-
-  recipeRouter
-    .route('/public')
-    .get((req, res, next) => {
-      RecipeService.getAllRecipes(req.app.get('db'))
-        .then(recipes => res.json(recipes))
-        .catch(next)
-    })
 
   module.exports = recipeRouter;
