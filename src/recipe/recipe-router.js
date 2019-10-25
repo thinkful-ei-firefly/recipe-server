@@ -16,20 +16,22 @@ recipeRouter
   })
   .post(requireAuth, jsonBodyParser, (req, res, next) => {
     const unverifiedRecipe = req.body;
-    const requiredKeys = ['name', 'ingredients', 'instructions', 'time_to_make', 'imageurl', 'public', 'category', 'description']
+    const requiredKeys = ['name', 'description', 'ingredients', 'instructions', 'category', 'time_to_make' ]
     requiredKeys.forEach(key => {
-      if (!(key in req.body)) {
+      if (!(key in req.body) || !req.body[key]) {
         return res.status(400).json({ error: 'Request body must include '+key})
       }
     })
+    const keys = ['name', 'ingredients', 'instructions', 'time_to_make', 'imageurl', 'public', 'category', 'description']
     const recipe = {
       owner: req.user.id
     }
-    requiredKeys.forEach(key => {
+    keys.forEach(key => {
       if (key in req.body) {
         recipe[key] = xss(unverifiedRecipe[key])
       }
     })
+    recipe.public = !!unverifiedRecipe.public
     RecipeService.addRecipe(req.app.get('db'), recipe)
       .then(newItem => res.json(newItem))
       .catch(next)
