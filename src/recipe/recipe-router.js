@@ -22,6 +22,7 @@ recipeRouter
         return res.status(400).json({ error: 'Request body must include '+key})
       }
     })
+    if (typeof unverifiedRecipe.time_to_make !== 'number') return res.status(400).json({ error: 'time_to_make must be an integer'})
     const recipe = {
       owner: req.user.id
     }
@@ -30,6 +31,7 @@ recipeRouter
         recipe[key] = xss(unverifiedRecipe[key])
       }
     })
+    recipe.public = !!unverifiedRecipe.public
     RecipeService.addRecipe(req.app.get('db'), recipe)
       .then(newItem => res.json(newItem))
       .catch(next)
