@@ -37,20 +37,33 @@ recipeRouter
       .catch(next)
   })
 
-  recipeRouter
-    .route('/public')
-    .get((req, res, next) => {
-      RecipeService.getPublic(req.app.get('db'))
-        .then(recipes => res.json(recipes))
-        .catch(next)
-    })
+recipeRouter
+  .route('/public')
+  .get((req, res, next) => {
+    RecipeService.getPublic(req.app.get('db'))
+      .then(recipes => res.json(recipes))
+      .catch(next)
+  })
 
 recipeRouter
-  .route('/:id')
+  .route('/public/:id')
   .get((req, res, next) => {
     RecipeService.getRecipeById(req.app.get('db'), req.params.id)
       .then(recipe => {
         if(!recipe) return res.status(404).json({ error: 'Found no recipe with that id'})
+        if(!recipe.public) return res.status(400).json({ error: 'That recipe is not available publicly'})
+        return res.json(recipe)
+      })
+      .catch(next)
+  })
+
+recipeRouter
+  .route('/:id')
+  .get(requireAuth, (req, res, next) => {
+    RecipeService.getRecipeById(req.app.get('db'), req.params.id)
+      .then(recipe => {
+        if(!recipe) return res.status(404).json({ error: 'Found no recipe with that id'})
+        if(recipe.owner !== req.user.id) return res.status(400).json({ error: 'You are not the owner of that recipe' })
         return res.json(recipe)
       })
       .catch(next)
