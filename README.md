@@ -94,6 +94,10 @@ Removes specified item from users shopping list
 
 ### Users /api/list
 
+#### '/' POST
+
+Validates login information and creates a new user account
+
 
 
 ### Up Load /api/upload
