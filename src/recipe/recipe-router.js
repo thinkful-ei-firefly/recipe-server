@@ -94,4 +94,22 @@ recipeRouter
       .catch(next)
   })
 
+recipeRouter
+  .route('/clone')
+  .post(requireAuth, jsonBodyParser, (req, res, next) => {
+    const { id } = req.body;
+    if (!id){
+      return res.status(400).json({error: 'Id is required'})
+    }
+    RecipeService.getRecipeById(req.app.get('db'), parseInt(id))
+      .then(recipe => {
+        delete recipe.id;
+        recipe.owner = req.user.id;
+        recipe.public = false;
+        return RecipeService.addRecipe(req.app.get('db'), recipe)
+      })
+      .then(newItem => res.json(newItem))
+      .catch(next)
+  })
+
   module.exports = recipeRouter;
