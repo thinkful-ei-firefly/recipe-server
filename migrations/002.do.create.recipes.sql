@@ -20,7 +20,7 @@ CREATE TABLE ingredients(
   id SERIAL PRIMARY KEY,
   owner INTEGER REFERENCES users(id),
   name TEXT NOT NULL,
-  amount INT NOT NULL,
+  amount TEXT NOT NULL,
   unit TEXT NOT NULL,
   date_added DATE DEFAULT CURRENT_TIMESTAMP
 );
