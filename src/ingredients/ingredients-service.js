@@ -1,28 +1,28 @@
 
 const IngredientsService = {
   getUsersIngredients(db, user_id) {
-    return db('ingredients')
+    return db('pantry')
       .select('*')
       .where({ owner: user_id })
   },
   addIngredient(db, ingredient) {
-    return db('ingredients')
+    return db('pantry')
       .insert(ingredient)
       .returning('*')
       .then(ingredients => ingredients[0])
   },
   removeIngredient(db, id, user_id) {
-    return db('ingredients')
+    return db('pantry')
       .delete()
       .where({ id, owner: user_id })
   },
   editIngredient(db, id, user_id, newInfo) {
-    return db('ingredients')
+    return db('pantry')
       .update(newInfo)
       .where({ id, owner: user_id })
   },
   deleteUsersIngredients(db, user_id) {
-    return db('ingredients')
+    return db('pantry')
       .delete()
       .where({ owner: user_id })
   }
