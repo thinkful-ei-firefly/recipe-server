@@ -85,6 +85,7 @@ recipeRouter
         recipe[key] = xss(unverifiedRecipe[key])
       }
     })
+    recipe.public = !!unverifiedRecipe.public
     RecipeService.editRecipe(req.app.get('db'), req.params.id, req.user.id, recipe)
       .then((edited) => {
         console.log(edited)
