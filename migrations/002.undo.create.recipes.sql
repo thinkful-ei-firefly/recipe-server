@@ -1,3 +1,3 @@
 DROP TABLE IF EXISTS recipes;
 
-DROP TABLE IF EXISTS ingredients;
+DROP TABLE IF EXISTS pantry;

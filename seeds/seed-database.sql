@@ -3,7 +3,7 @@ BEGIN;
 TRUNCATE
   "users",
   "recipes",
-  "ingredients",
+  "pantry",
   "shopping_list";
 
 INSERT INTO users(id, user_name, password) VALUES
@@ -104,7 +104,7 @@ INSERT INTO shopping_list(id, owner, name) VALUES
 
 SELECT setval('users_id_seq', (SELECT MAX(id) from "users"));
 SELECT setval('recipes_id_seq', (SELECT MAX(id) from "recipes"));
-SELECT setval('ingredients_id_seq', (SELECT MAX(id) from "ingredients"));
+SELECT setval('ingredients_id_seq', (SELECT MAX(id) from "pantry"));
 SELECT setval('shopping_list_id_seq', (SELECT MAX(id) from "shopping_list"));
 
 COMMIT;
