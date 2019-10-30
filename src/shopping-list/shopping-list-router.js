@@ -44,6 +44,31 @@ shoppingListRouter
   })
 
 shoppingListRouter
+  .route('/many')
+  .post(requireAuth, jsonBodyParser, (req, res, next) => {
+    if (!req.body.length) return res.status(400).json({ error: 'Request body must be an array'})
+    const requiredKeys = ['name', 'amount', 'unit']
+    for (let i=0; i<req.body.length; i++) {
+      requiredKeys.forEach(key => {
+        if (!(key in req.body[i])) {
+          return res.status(400).json({ error: 'Request body must include '+key+' with each ingredient'})
+        }
+      })
+    }
+    for (let i=0; i<req.body.length; i++) {
+      const unverifiedIngredient = req.body[i]
+      const newIngredient = {
+        owner: req.user.id
+      }
+      requiredKeys.forEach(key => {
+          newIngredient[key] = xss(unverifiedIngredient[key])
+        })
+      ShoppingListService.addItem(req.app.get('db'), newIngredient)
+    }
+    res.status(200).json(req.body)
+  })  
+
+shoppingListRouter
 .route('/crossed')
 .delete(requireAuth, (req, res, next) => {
   ShoppingListService.deleteCrossed(req.app.get('db'), req.user.id)
