@@ -34,6 +34,11 @@ const ShoppingListService = {
     return db('shopping_list')
       .delete()
       .where({ crossed: true, owner: user_id })
+  },
+  getCrossed(db, user_id) {
+    return db('shopping_list')
+      .select('*')
+      .where({ crossed: true, owner: user_id })
   }
 }
 

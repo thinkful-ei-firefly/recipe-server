@@ -11,6 +11,12 @@ const IngredientsService = {
       .returning('*')
       .then(ingredients => ingredients[0])
   },
+  addMultipleIngredient(db, ingredients) {
+    return db('pantry')
+      .insert(ingredients)
+      .returning('*')
+      .then(ingredients => ingredients)
+  },
   removeIngredient(db, id, user_id) {
     return db('pantry')
       .delete()

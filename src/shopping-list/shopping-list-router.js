@@ -2,6 +2,7 @@ const express = require('express');
 const xss = require('xss');
 
 const ShoppingListService = require('./shopping-list-service')
+const IngredientsService = require('../ingredients/ingredients-service')
 const { requireAuth } = require('../middleware/jwt-auth');
 
 const shoppingListRouter = express.Router();
@@ -33,7 +34,7 @@ shoppingListRouter
     ShoppingListService.addItem(req.app.get('db'), newIngredient)
       .then(item => res.json(item))
       .catch(next)
-  })  
+  })
   .delete(requireAuth, (req, res, next) => {
     ShoppingListService.deleteList(req.app.get('db'), req.user.id)
       .then(deleted => {
@@ -66,12 +67,30 @@ shoppingListRouter
       ShoppingListService.addItem(req.app.get('db'), newIngredient)
     }
     res.status(200).json(req.body)
-  })  
+  })
 
 shoppingListRouter
 .route('/crossed')
 .delete(requireAuth, (req, res, next) => {
   ShoppingListService.deleteCrossed(req.app.get('db'), req.user.id)
+    .then(deleted => res.status(204).end())
+    .catch(next)
+})
+
+shoppingListRouter
+.route('/movetopantry')
+.post(requireAuth, (req, res, next) => {
+  ShoppingListService.getCrossed(req.app.get('db'), req.user.id)
+    .then(crossed => {
+      crossed.map(cross => {
+        delete cross.id
+        delete cross.crossed
+        delete cross.date_added
+        return cross
+      })
+      return IngredientsService.addMultipleIngredient(req.app.get('db'), crossed)
+    })
+    .then(newpantry => ShoppingListService.deleteCrossed(req.app.get('db'), req.user.id))
     .then(deleted => res.status(204).end())
     .catch(next)
 })
