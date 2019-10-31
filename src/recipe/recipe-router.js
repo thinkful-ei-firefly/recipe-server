@@ -79,7 +79,7 @@ recipeRouter
   .patch(requireAuth, jsonBodyParser, (req, res, next) => {
     const unverifiedRecipe = req.body;
     let recipe = {}
-    const possibleKeys = ['name', 'ingredients', 'instructions', 'time_to_make', 'category', 'description']
+    const possibleKeys = ['name', 'ingredients', 'instructions', 'time_to_make', 'imageurl', 'category', 'description']
     possibleKeys.forEach(key => {
       if (key in req.body) {
         recipe[key] = xss(unverifiedRecipe[key])
