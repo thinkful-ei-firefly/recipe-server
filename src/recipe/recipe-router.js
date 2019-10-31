@@ -19,7 +19,7 @@ recipeRouter
     const requiredKeys = ['name', 'description', 'ingredients', 'instructions', 'category', 'time_to_make' ]
     requiredKeys.forEach(key => {
       if (!(key in req.body) || !req.body[key]) {
-        return res.status(400).json({ error: 'Request body must include '+key})
+        return res.status(400).json({ error: 'Request body must include '+ key})
       }
     })
     const keys = ['name', 'ingredients', 'instructions', 'time_to_make', 'imageurl', 'public', 'category', 'description']
