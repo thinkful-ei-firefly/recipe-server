@@ -35,7 +35,7 @@ authRouter
       .catch(next);
   })
   .post('/googlelogin', jsonBodyParser, (req, res, next) => {
-    
+
     const {
       token,
       isNewUser,
@@ -59,6 +59,39 @@ authRouter
           return res.status(400).json({error: 'Incorrect user_name or password'});
         }
         AuthService.verifyGoogleToken(loginUser.token)
+          .then(() => {
+            const payload = { user_id: user.id };
+            const subject = user.user_name;
+            res.send({ authToken: AuthService.createJwt(subject, payload), id: user.id} );
+          });
+      })
+      .catch(next);
+  })
+  .post('/facebooklogin', jsonBodyParser, (req, res, next) => {
+
+    const {
+      token,
+      isNewUser,
+      fullName,
+      email,
+      accountCreated,
+      lastLogin
+    } = req.body;
+
+    const loginUser = {token, isNewUser, fullName, email, accountCreated, lastLogin};
+
+    for (const [key, value] of Object.entries(loginUser)) {
+      if (value === null) {
+        return res.status(400).json({error: `Missing '${key}' in request body`});
+      }
+    }
+
+    AuthService.getUserWithUsername(req.app.get('db'), loginUser.email)
+      .then(user => {
+        if (!user) {
+          return res.status(400).json({error: 'Incorrect user_name or password'});
+        }
+        AuthService.verifyFacebookToken(loginUser.token)
           .then(() => {
             const payload = { user_id: user.id };
             const subject = user.user_name;
