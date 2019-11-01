@@ -102,3 +102,14 @@ Validates login information and creates a new user account
 
 ### Up Load /api/upload
 
+
+Installation:
+clone github repo
+install node dependencies, "npm install"
+move example.env to .env
+create database and replace example names in .env
+migrate database, "npm run migrate"
+run api, "npm start"
+
+
+
