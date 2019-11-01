@@ -6,7 +6,7 @@ const RecipeService = {
   },
   getPublic(db){
     return db('recipes')
-      .select('id', 'name', 'time_to_make', 'category', 'description', 'imageurl', 'ingredients', 'public')
+      .select('id', 'name', 'time_to_make', 'category', 'description', 'imageurl', 'ingredients', 'public', 'rating')
       .where({public: true})
   },
   getRecipeById(db, id) {
@@ -38,6 +38,17 @@ const RecipeService = {
       .update(newInfo)
       .where({ id, owner: user_id })
   },
+  editRecipeRating(db, id, newInfo) {
+    return db('recipes')
+      .update(newInfo)
+      .where({ id })
+  },
+  getRating(db, id) {
+    return db('recipes')
+      .select('rating', 'times_rated')
+      .where({ id })
+      .first()
+  }
 }
 
 module.exports = RecipeService
