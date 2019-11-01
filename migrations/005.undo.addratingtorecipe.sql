@@ -1,0 +1,4 @@
+ALTER TABLE recipes
+DROP COLUMN IF EXISTS rating;
+ALTER TABLE recipes
+DROP COLUMN IF EXISTS times_rated;

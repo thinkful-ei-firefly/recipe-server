@@ -13,6 +13,7 @@ const usersRouter = require('./users/users-router');
 const recipeRouter = require('./recipe/recipe-router');
 const ingredientsRouter = require('./ingredients/ingredients-router');
 const shoppingListRouter = require('./shopping-list/shopping-list-router');
+const ratingsRouter = require('./ratings/ratings-router')
 const uploadRouter = require('./recipe/upload-aws')
 
 const morganOption = (NODE_ENV === 'production') ? 'tiny' : 'common';
@@ -27,6 +28,7 @@ app.use('/api/recipes', recipeRouter);
 app.use('/api/ingredients', ingredientsRouter);
 app.use('/api/list', shoppingListRouter)
 app.use('/api/upload', uploadRouter);
+app.use('/api/ratings', ratingsRouter);
 
 app.get('/', (req, res) => {
   res.send('TEST')
