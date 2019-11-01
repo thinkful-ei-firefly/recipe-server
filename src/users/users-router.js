@@ -96,6 +96,51 @@ usersRouter
       })
       .catch(next);
 
+  }).post('/facebook', jsonBodyParser, (req, res, next) => {
+    const {
+      token,
+      isNewUser,
+      fullName,
+      email,
+      accountCreated,
+      lastLogin
+    } = req.body;
+
+    const requiredFields = {token, isNewUser, fullName, email, accountCreated, lastLogin};
+
+    for (const [key, value] of Object.entries(requiredFields)) {
+      if (value === null) {
+        return res.status(400).json({error: `Missing '${key}' in request body`});
+      }
+    }
+
+    UsersService.hasUserWithUserName(req.app.get('db'), requiredFields.email)
+      .then(userExists => {
+        if (userExists) {
+          return res.status(400).json({ error: 'That username is already taken' });
+        }
+
+        // verify google token
+        AuthService.verifyFacebookToken(requiredFields.token)
+          .then(() => {
+            const newUser = {
+              user_name: requiredFields.email,
+              password: requiredFields.token
+            };
+            return UsersService.insertUser(req.app.get('db'), newUser)
+              .then(user => {
+                const userInfo = UsersService.serializeUser(user);
+                const payload = { user_id: userInfo.id };
+                const subject = userInfo.user_name;
+                res
+                  .status(201)
+                  .location(path.posix.join(req.originalUrl, `/${user.id}`))
+                  .json({ authToken: AuthService.createJwt(subject, payload), id: userInfo.id, user_name: userInfo.user_name});
+              });
+          });
+      })
+      .catch(next);
+
   });
 
   module.exports = usersRouter;
