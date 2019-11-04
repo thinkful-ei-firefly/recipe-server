@@ -1,100 +1,112 @@
+# Good Meal Server
+
 server repo: https://github.com/thinkful-ei-firefly/recipe-server
 client repo: https://github.com/thinkful-ei-firefly/recipe-client
 Live app: https://good-meal-client.herokuapp.com/
 
-# Good Meal Server
+## Installation
+clone github repo
+install node dependencies, "npm install"
+move example.env to .env
+create database and replace example names in .env
+migrate database, "npm run migrate"
+run api, "npm start"
 
 ## Endpoints
 
 ### Auth /api/auth
 
-#### '/' post
+#### POST '/'
 
 User validation. POST username and passoword. Returns a "bad login request" or an auth token
 
+
 ### Ingredients /api/ingredients
 
-#### '/' get
+#### GET '/'
 
 Returns the ingredients the user currently has
 
-#### '/' post
+#### POST '/'
 
 Verifys and adds an ingredient to a users cabinet/ storage
 
-#### '/' delete
+#### DELETE '/'
 
 Removes all ingredients from a users cabinet
 
-#### '/:id' delete
+#### DELETE '/:id'
 
 Removes selected ingredient from users cabinet
 
-#### '/:id' patch
+#### PATCH '/:id'
 
 Edits selected ingredient with new information
 
+
 ### Recipe /api/recipes
 
-#### '/' get
+#### GET '/'
 
 Returns a user's recipes(id, name, time_to_make, category, description, imageurl, incredients, public )
 
-#### '/' post
+#### POST '/'
 
 Posts a recipe created by a user.
 
-#### '/' patch
+#### PATCH '/'
 
-#### '/pubic' get
+#### GET '/pubic'
 
 Gets all recipes where public === true
 
-#### '/public/:id'
+#### GET '/public/:id'
 
 Gets all details for specified public recipe
 
-#### '/:id' get
+#### GET '/:id'
 
 Gets specified recipe owned by that user
 
-#### '/:id' delete
+#### DELETE '/:id'
 
 Removes specified recipe from users book.
 
-#### '/:id' patch
+#### PATCH '/:id'
 
 Edits information of specified recipe
 
+
 ### Shopping List /api/list
 
-#### '/' GET
+#### GET '/'
 
 Returns a list of things currently on a users shopping list
 
-#### '/' POST
+#### POST '/'
 
 Adds an item to a users shopping list
 
-#### '/' DELETE
+#### DELETE '/'
 
 Removes all items from users shopping list
 
-#### '/crossed' DELETE
+#### DELETE '/crossed'
 
 Removes all crossed off items from a users shopping list
 
-#### '/:id' PATCH
+#### PATCH '/:id'
 
 Checks or unchecks selected item from users shopping list
 
-#### '/:id' DELETE
+#### DELETE '/:id'
 
 Removes specified item from users shopping list
 
+
 ### Users /api/list
 
-#### '/' POST
+#### POST '/'
 
 Validates login information and creates a new user account
 
@@ -103,13 +115,26 @@ Validates login information and creates a new user account
 ### Up Load /api/upload
 
 
-Installation:
-clone github repo
-install node dependencies, "npm install"
-move example.env to .env
-create database and replace example names in .env
-migrate database, "npm run migrate"
-run api, "npm start"
 
+
+## Technologies Used
+
+HTML5
+CSS3
+JavaScript
+
+React.js
+Node.js
+Express
+PostgreSQL
+
+AWS
+knex
+Chai
+Mocha
+Supertest
+XSS
+Jason Web Tokens
+Axios
 
 
