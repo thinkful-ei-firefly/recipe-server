@@ -1,5 +1,7 @@
 # Good Meal Server
 
+<img src="./images/background1.png" alt="Good Meal" width="200px">
+
 server repo: https://github.com/thinkful-ei-firefly/recipe-server
 client repo: https://github.com/thinkful-ei-firefly/recipe-client
 Live app: https://good-meal-client.herokuapp.com/
