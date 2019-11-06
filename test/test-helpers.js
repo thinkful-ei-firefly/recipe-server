@@ -68,7 +68,7 @@ function makePantryArray(){
   ]
 }
 
-function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
+/*function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   console.log(process.env.JWT_SECRET);
   console.log(user);
   const token = jwt.sign({ user_id: user.id }, secret, {
@@ -76,6 +76,16 @@ function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
     algorithm: 'HS256',
   })
   return `Bearer ${token}`
+}*/
+
+function makeAuthHeader(userAux, secret = process.env.JWT_SECRET) {
+  let user = makeUsersArray()[0];
+  user.id=1;
+  const token = jwt.sign({ user_id: user.id }, secret, {
+    subject: user.user_name,
+    algorithm: 'HS256'
+  });
+  return `Bearer ${token}`;
 }
 
 function cleanTables(db) {
@@ -110,14 +120,15 @@ function seedUsers(db, users) {
     ...user,
     password: bcrypt.hashSync(user.password, 10)
   }))
-  return db.transaction(async trx => {
-    await trx.into('users').insert(preppedUsers)
+  return db
+    .into('users')
+    .insert(preppedUsers);
+}
 
-    await trx.raw(
-      `SELECT setval('users_id_seq', ?)`,
-      [users[users.length - 1].id],
-    )
-  })
+function seedIngredients(db, ingredients) {
+  return db
+    .into('pantry')
+    .insert(ingredients);
 }
 
 module.exports = {
@@ -128,4 +139,5 @@ module.exports = {
   makeAuthHeader,
   cleanTables,
   seedUsers,
+  seedIngredients,
 }
