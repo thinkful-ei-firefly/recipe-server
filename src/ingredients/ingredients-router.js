@@ -17,11 +17,10 @@ ingredientsRouter
   .post(requireAuth, jsonBodyParser, (req, res, next) => {
     const unverifiedIngredient = req.body
     const requiredKeys = ['name', 'amount', 'unit']
-    requiredKeys.forEach(key => {
-      if (!(key in req.body)) {
-        return res.status(400).json({ error: 'Request body must include '+key})
-      }
-    })
+    for(const field of requiredKeys) {
+      if (!req.body[field])
+        return res.status(400).json({ error: `Missing '${field}' in request body` });
+    }
     const newIngredient = {
       owner: req.user.id
     }
@@ -63,7 +62,6 @@ ingredientsRouter
     })
     IngredientsService.editIngredient(req.app.get('db'), req.params.id, req.user.id, ingredient)
       .then((edited) => {
-        console.log(edited)
         if (!edited) return res.status(404).json({ error: 'Found no ingredient with that id' })
         return res.status(204).end()
       })
