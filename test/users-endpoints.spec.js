@@ -40,7 +40,7 @@ describe('User Endpoints', function () {
           .post('/api/users')
           .send(registerAttemptBody)
           .expect(400, {
-            error: `Missing '${field}' in requrest`,
+            error: `Missing '${field}' in request body`,
           })
       })
     })
@@ -88,17 +88,6 @@ describe('User Endpoints', function () {
         .send(userPasswordEndsSpaces)
         .expect(400, { error: `Password must not start or end with empty spaces` })
     })
-
-    /*it(`responds 400 error when password isn't complex enough`, () => {
-      const userPasswordNotComplex = {
-        user_name: 'test user_name',
-        password: '11AAaabb'
-      }
-      return supertest(app)
-        .post('/api/users')
-        .send(userPasswordNotComplex)
-        .expect(400, { error: `Password must contain one upper case, lower case, number and special character` })
-    })*/
 
     it(`responds 400 'User name already taken' when user_name isn't unique`, () => {
       const duplicateUser = {
@@ -154,6 +143,90 @@ describe('User Endpoints', function () {
               })
           )
       })
+    })
+  })
+  describe(`POST /api/users/google`, () => {
+    beforeEach('insert google users', () => helpers.seedUsers(db, testUsers))
+
+    const requiredFields = ['token', 'isNewUser', 'fullName', 'email', 'accountCreated', 'lastLogin']
+
+    requiredFields.forEach(field => {
+      const registerAttemptBody = {
+        token: 'ssfdfsdfsdfsdfs',
+        isNewUser: true,
+        fullName: 'Nameee',
+        email: 'fsdfs@fdsf.com',
+        accountCreated: 'today',
+        lastLogin: 'yesterday'
+      }
+
+      it(`responds with 400 required error when '${field}' is missing`, () => {
+        delete registerAttemptBody[field]
+
+        return supertest(app)
+          .post('/api/users/google')
+          .send(registerAttemptBody)
+          .expect(400, {
+            error: `Missing '${field}' in request body`,
+          })
+      })
+    })
+
+    it(`responds 400 'User name already taken' when user_name isn't unique`, () => {
+      const duplicateUser = {
+        token: 'ssfdfsdfsdfsdfs',
+        isNewUser: true,
+        fullName: 'Nameee',
+        email: testUser.user_name,
+        accountCreated: 'today',
+        lastLogin: 'yesterday'
+      }
+      return supertest(app)
+        .post('/api/users/google')
+        .send(duplicateUser)
+        .expect(400, { error: `That username is already taken` })
+    })
+  })
+  describe(`POST /api/users/facebook`, () => {
+    beforeEach('insert google users', () => helpers.seedUsers(db, testUsers))
+
+    const requiredFields = ['token', 'isNewUser', 'fullName', 'email', 'accountCreated', 'lastLogin']
+
+    requiredFields.forEach(field => {
+      const registerAttemptBody = {
+        token: 'ssfdfsdfsdfsdfs',
+        isNewUser: true,
+        fullName: 'Nameee',
+        email: 'fsdfs@fdsf.com',
+        accountCreated: 'today',
+        lastLogin: 'yesterday'
+      }
+
+      it(`responds with 400 required error when '${field}' is missing`, () => {
+        delete registerAttemptBody[field]
+
+        return supertest(app)
+          .post('/api/users/facebook')
+          .send(registerAttemptBody)
+          .expect(400, {
+            error: `Missing '${field}' in request body`,
+          })
+      })
+    })
+
+    it(`responds 400 'User name already taken' when user_name isn't unique`, () => {
+      const duplicateUser = {
+        token: 'ssfdfsdfsdfsdfs',
+        isNewUser: true,
+        fullName: 'Nameee',
+        email: testUser.user_name,
+        accountCreated: 'today',
+        lastLogin: 'yesterday'
+      }
+      return supertest(app)
+        .post('/api/users/facebook')
+        .send(duplicateUser)
+        .expect(400, { error: `That username is already taken` })
     })
   })
 })
