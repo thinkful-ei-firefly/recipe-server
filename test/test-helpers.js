@@ -49,6 +49,25 @@ function makeRecipeArray(){
   ]
 }
 
+function makePantryArray(){
+  return [
+    {
+      id: 1,
+      owner: 2,
+      name: 'Sugar',
+      amount: '1/8',
+      unit: 'cup'
+    },
+    {
+      id: 2,
+      owner: 1,
+      name: 'Salt',
+      amount: '1/4',
+      unit: 'Tbs'
+    }
+  ]
+}
+
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   console.log(process.env.JWT_SECRET);
   console.log(user);
@@ -65,16 +84,22 @@ function cleanTables(db) {
       `TRUNCATE
         "users",
         "recipes",
-        "ingredients"`
+        "pantry",
+        "shopping_list",
+        "ratings"`
       )
       .then(() =>
         Promise.all([
           trx.raw(`ALTER SEQUENCE users_id_seq minvalue 0 START WITH 1`),
           trx.raw(`ALTER SEQUENCE recipes_id_seq minvalue 0 START WITH 1`),
-          trx.raw(`ALTER SEQUENCE ingredients_id_seq minvalue 0 START WITH 1`),
+          trx.raw(`ALTER SEQUENCE pantry_id_seq minvalue 0 START WITH 1`),
+          trx.raw(`ALTER SEQUENCE shopping_list_id_seq minvalue 0 START WITH 1`),
+          trx.raw(`ALTER SEQUENCE ratings_id_seq minvalue 0 START WITH 1`),
           trx.raw(`SELECT setval('users_id_seq', 0)`),
           trx.raw(`SELECT setval('recipes_id_seq', 0)`),
-          trx.raw(`SELECT setval('ingredients_id_seq', 0)`),
+          trx.raw(`SELECT setval('pantry_id_seq', 0)`),
+          trx.raw(`SELECT setval('shopping_list_id_seq', 0)`),
+          trx.raw(`SELECT setval('ratings_id_seq', 0)`),
         ])
       )
   )
@@ -99,6 +124,7 @@ module.exports = {
   makeKnexInstance,
   makeUsersArray,
   makeRecipeArray,
+  makePantryArray,
   makeAuthHeader,
   cleanTables,
   seedUsers,

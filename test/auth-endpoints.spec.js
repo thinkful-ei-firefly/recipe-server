@@ -90,4 +90,138 @@ describe('Auth Endpoints', function () {
     })
   })
 
+  describe(`POST /api/auth/googlelogin`, () => {
+    beforeEach('insert users', () =>
+      helpers.seedUsers(
+        db,
+        testUsers,
+      )
+    )
+
+    const requiredFields = ['token', 'isNewUser', 'fullName', 'email', 'accountCreated', 'lastLogin']
+
+    requiredFields.forEach(field => {
+      const loginAttemptBody = {
+        token: 'ssfdfsdfsdfsdfs',
+        isNewUser: true,
+        fullName: 'Nameee',
+        email: 'fsdfs@fdsf.com',
+        accountCreated: 'today',
+        lastLogin: 'yesterday'
+      }
+
+      it(`responds with 400 required error when '${field}' is missing`, () => {
+        delete loginAttemptBody[field]
+
+        return supertest(app)
+          .post('/api/auth/googlelogin')
+          .send(loginAttemptBody)
+          .expect(400, {
+            error: `Missing '${field}' in request body`,
+          })
+      })
+    })
+
+    it(`responds 400 'invalid user_name or password' when bad user_name`, () => {
+      const userInvalidUser = {
+        user_name: 'user-not',
+        password: 'existy',
+        token: 'ssfdfsdfsdfsdfs',
+        isNewUser: true,
+        fullName: 'Nameee',
+        email: 'fsdfs@fdsf.com',
+        accountCreated: 'today',
+        lastLogin: 'yesterday'
+      }
+      return supertest(app)
+        .post('/api/auth/googlelogin')
+        .send(userInvalidUser)
+        .expect(400, { error: `Incorrect user_name or password` })
+    })
+
+    it(`responds 400 'invalid user_name or password' when bad password`, () => {
+      const userInvalidPass = {
+        user_name: testUser.user_name,
+        password: 'incorrect',
+        token: 'ssfdfsdfsdfsdfs',
+        isNewUser: true,
+        fullName: 'Nameee',
+        email: 'fsdfs@fdsf.com',
+        accountCreated: 'today',
+        lastLogin: 'yesterday'
+      }
+      return supertest(app)
+        .post('/api/auth/googlelogin')
+        .send(userInvalidPass)
+        .expect(400, { error: `Incorrect user_name or password` })
+    })
+  })
+
+  describe(`POST /api/auth/facebooklogin`, () => {
+    beforeEach('insert users', () =>
+      helpers.seedUsers(
+        db,
+        testUsers,
+      )
+    )
+
+    const requiredFields = ['token', 'isNewUser', 'fullName', 'email', 'accountCreated', 'lastLogin']
+
+    requiredFields.forEach(field => {
+      const loginAttemptBody = {
+        token: 'ssfdfsdfsdfsdfs',
+        isNewUser: true,
+        fullName: 'Nameee',
+        email: 'fsdfs@fdsf.com',
+        accountCreated: 'today',
+        lastLogin: 'yesterday'
+      }
+
+      it(`responds with 400 required error when '${field}' is missing`, () => {
+        delete loginAttemptBody[field]
+
+        return supertest(app)
+          .post('/api/auth/facebooklogin')
+          .send(loginAttemptBody)
+          .expect(400, {
+            error: `Missing '${field}' in request body`,
+          })
+      })
+    })
+
+    it(`responds 400 'invalid user_name or password' when bad user_name`, () => {
+      const userInvalidUser = {
+        user_name: 'user-not',
+        password: 'existy',
+        token: 'ssfdfsdfsdfsdfs',
+        isNewUser: true,
+        fullName: 'Nameee',
+        email: 'fsdfs@fdsf.com',
+        accountCreated: 'today',
+        lastLogin: 'yesterday'
+      }
+      return supertest(app)
+        .post('/api/auth/facebooklogin')
+        .send(userInvalidUser)
+        .expect(400, { error: `Incorrect user_name or password` })
+    })
+
+    it(`responds 400 'invalid user_name or password' when bad password`, () => {
+      const userInvalidPass = {
+        user_name: testUser.user_name,
+        password: 'incorrect',
+        token: 'ssfdfsdfsdfsdfs',
+        isNewUser: true,
+        fullName: 'Nameee',
+        email: 'fsdfs@fdsf.com',
+        accountCreated: 'today',
+        lastLogin: 'yesterday'
+      }
+      return supertest(app)
+        .post('/api/auth/facebooklogin')
+        .send(userInvalidPass)
+        .expect(400, { error: `Incorrect user_name or password` })
+    })
+  })
+
 })

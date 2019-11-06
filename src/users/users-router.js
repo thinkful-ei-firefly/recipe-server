@@ -18,7 +18,7 @@ usersRouter
 
     for(const field of requiredFields) {
       if (!req.body[field])
-        return res.status(400).json({ error: `Missing '${field}' in requrest` });
+        return res.status(400).json({ error: `Missing '${field}' in request body` });
     }
 
     const passwordError = UsersService.checkPassword(password);
@@ -64,7 +64,7 @@ usersRouter
     const requiredFields = {token, isNewUser, fullName, email, accountCreated, lastLogin};
 
     for (const [key, value] of Object.entries(requiredFields)) {
-      if (value === null) {
+      if (!value || value === null) {
         return res.status(400).json({error: `Missing '${key}' in request body`});
       }
     }
@@ -109,7 +109,7 @@ usersRouter
     const requiredFields = {token, isNewUser, fullName, email, accountCreated, lastLogin};
 
     for (const [key, value] of Object.entries(requiredFields)) {
-      if (value === null) {
+      if (!value || value === null) {
         return res.status(400).json({error: `Missing '${key}' in request body`});
       }
     }
