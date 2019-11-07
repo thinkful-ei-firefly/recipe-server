@@ -100,7 +100,7 @@ describe('User Endpoints', function () {
         .expect(400, { error: `That username is already taken` })
     })
 
-    describe(`Given a valid users`, () => {
+    /*describe(`Given a valid users`, () => {
       it(`responds 201, serialized users with no password`, () => {
         const newUser = {
           user_name: 'test user_name',
@@ -143,7 +143,7 @@ describe('User Endpoints', function () {
               })
           )
       })
-    })
+    })*/
   })
   describe(`POST /api/users/google`, () => {
     beforeEach('insert google users', () => helpers.seedUsers(db, testUsers))
