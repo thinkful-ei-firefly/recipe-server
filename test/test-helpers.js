@@ -34,6 +34,10 @@ function makeRecipeArray(){
       id: 1,
       owner: 1,
       name: 'Food 1',
+      public: true,
+      category: 'Thai',
+      imageurl: 'image.png',
+      description: 'desc 1',
       ingredients: '{"Ingredient 1" , "Ingredient 2"}',
       instructions: '{"Instruction 1" , "Instruction 2"}',
       time_to_make: 4
@@ -42,6 +46,10 @@ function makeRecipeArray(){
       id: 2,
       owner: 2,
       name: 'Food 2',
+      public: false,
+      category: 'Mexican',
+      imageurl: 'image1.png',
+      description: 'desc 2',
       ingredients: '{"Ingredient 2-1" , "Ingredient 2-2"}',
       instructions: '{"Instruction 2-1" , "Instruction 2-2"}',
       time_to_make: 2
@@ -90,16 +98,6 @@ function makeRatingArray(){
     }
   ]
 }
-
-/*function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
-  console.log(process.env.JWT_SECRET);
-  console.log(user);
-  const token = jwt.sign({ user_id: user.id }, secret, {
-    subject: user.user_name,
-    algorithm: 'HS256',
-  })
-  return `Bearer ${token}`
-}*/
 
 function makeAuthHeader(userAux, secret = process.env.JWT_SECRET) {
   let user = makeUsersArray()[0];
@@ -155,9 +153,14 @@ function seedIngredients(db, ingredients) {
 }
 
 function seedRecipes(db, recipes) {
-  return db
-    .into('recipes')
-    .insert(recipes);
+  return db.transaction(async trx => {
+    await trx.into('recipes').insert(recipes)
+
+    await trx.raw(
+      `SELECT setval('recipes_id_seq', ?)`,
+      [recipes[recipes.length - 1].id],
+    )
+  })
 }
 
 function seedRatings(db, ratings) {

@@ -1,7 +1,7 @@
 const app = require('../src/app')
 const helpers = require('./test-helpers')
 
-describe.only('Rating Endpoints', function () {
+describe('Rating Endpoints', function () {
     let db
 
     const testUsers = helpers.makeUsersArray()
@@ -31,7 +31,7 @@ describe.only('Rating Endpoints', function () {
 
             return supertest(app)
                 .post('/api/ratings/1')
-                //.set('Authorization', helpers.makeAuthHeader())
+                .set('Authorization', helpers.makeAuthHeader())
                 .send(loginAttemptBody)
                 .expect(400, {
                     error: `Request must include a rating key`,
@@ -43,7 +43,7 @@ describe.only('Rating Endpoints', function () {
 
             return supertest(app)
                 .post('/api/ratings/2')
-                //.set('Authorization', helpers.makeAuthHeader())
+                .set('Authorization', helpers.makeAuthHeader())
                 .send(loginAttemptBody)
                 .expect(400, {
                     error: `Request must include a rating key`,
@@ -54,7 +54,7 @@ describe.only('Rating Endpoints', function () {
             const test = {rating: 2}
             return supertest(app)
                 .post('/api/ratings/2')
-                //.set('Authorization', helpers.makeAuthHeader())
+                .set('Authorization', helpers.makeAuthHeader())
                 .send(test)
                 .expect(200)
                 /*.expect(res => {
