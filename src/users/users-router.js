@@ -65,7 +65,8 @@ usersRouter
 
     for (const [key, value] of Object.entries(requiredFields)) {
       if (!value || value === null) {
-        return res.status(400).json({error: `Missing '${key}' in request body`});
+        if (typeof value !== 'boolean')
+          return res.status(400).json({error: `Missing '${key}' in request body`});
       }
     }
 
@@ -110,7 +111,8 @@ usersRouter
 
     for (const [key, value] of Object.entries(requiredFields)) {
       if (!value || value === null) {
-        return res.status(400).json({error: `Missing '${key}' in request body`});
+        if (typeof value !== 'boolean')
+          return res.status(400).json({error: `Missing '${key}' in request body`});
       }
     }
 

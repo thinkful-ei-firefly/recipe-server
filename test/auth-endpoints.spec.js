@@ -157,7 +157,7 @@ describe('Auth Endpoints', function () {
     })
   })
 
-  describe(`POST /api/auth/facebooklogin`, () => {
+  describe.only(`POST /api/auth/facebooklogin`, () => {
     beforeEach('insert users', () =>
       helpers.seedUsers(
         db,
@@ -170,7 +170,7 @@ describe('Auth Endpoints', function () {
     requiredFields.forEach(field => {
       const loginAttemptBody = {
         token: 'ssfdfsdfsdfsdfs',
-        isNewUser: true,
+        isNewUser: false,
         fullName: 'Nameee',
         email: 'fsdfs@fdsf.com',
         accountCreated: 'today',
