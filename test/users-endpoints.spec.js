@@ -99,51 +99,6 @@ describe('User Endpoints', function () {
         .send(duplicateUser)
         .expect(400, { error: `That username is already taken` })
     })
-
-    /*describe(`Given a valid users`, () => {
-      it(`responds 201, serialized users with no password`, () => {
-        const newUser = {
-          user_name: 'test user_name',
-          password: '11AAaa!!',
-        }
-        return supertest(app)
-          .post('/api/users')
-          .send(newUser)
-          .expect(201)
-          .expect(res => {
-            expect(res.body).to.have.property('id')
-            expect(res.body.user_name).to.eql(newUser.user_name)
-            expect(res.body).to.not.have.property('password')
-            expect(res.headers.location).to.eql(`/api/users/${res.body.id}`)
-          })
-      })
-
-      it(`stores the new users in db with bcryped password`, () => {
-        const newUser = {
-          user_name: 'test user_name',
-          password: '11AAaa!!',
-        }
-        return supertest(app)
-          .post('/api/users')
-          .send(newUser)
-          .expect(res =>
-            db
-              .from('users')
-              .select('*')
-              .where({ id: res.body.id })
-              .first()
-              .then(row => {
-                expect(row.user_name).to.eql(newUser.user_name)
-                expect(row.name).to.eql(newUser.name)
-
-                return bcrypt.compare(newUser.password, row.password)
-              })
-              .then(compareMatch => {
-                expect(compareMatch).to.be.true
-              })
-          )
-      })
-    })*/
   })
   describe(`POST /api/users/google`, () => {
     beforeEach('insert google users', () => helpers.seedUsers(db, testUsers))

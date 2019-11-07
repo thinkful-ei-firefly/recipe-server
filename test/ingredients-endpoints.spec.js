@@ -31,9 +31,6 @@ describe('Ingredient Endpoints', function () {
           .get('/api/ingredients')
           .set('Authorization', helpers.makeAuthHeader())
           .expect(200)
-        /*.expect(res => {
-          console.log(res.body);
-        })*/
       })
     })
   })
@@ -73,9 +70,6 @@ describe('Ingredient Endpoints', function () {
         .set('Authorization', helpers.makeAuthHeader())
         .send(testIngredient)
         .expect(200)
-        /*.expect(res => {
-          console.log(res.body);
-        })*/
     })
   })
 
@@ -116,9 +110,6 @@ describe('Ingredient Endpoints', function () {
           .delete('/api/ingredients')
           .set('Authorization', helpers.makeAuthHeader())
           .expect(204)
-        /*.expect(res => {
-          console.log(res.body);
-        })*/
       })
     })
   })
@@ -135,9 +126,6 @@ describe('Ingredient Endpoints', function () {
           .delete('/api/ingredients/1')
           .set('Authorization', helpers.makeAuthHeader())
           .expect(404)
-        /*.expect(res => {
-          console.log(res.body);
-        })*/
       })
 
       it('Ingredient deleted successful', () => {
@@ -145,9 +133,6 @@ describe('Ingredient Endpoints', function () {
           .delete('/api/ingredients/2')
           .set('Authorization', helpers.makeAuthHeader())
           .expect(204)
-        /*.expect(res => {
-          console.log(res.body);
-        })*/
       })
     })
   })

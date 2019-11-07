@@ -18,11 +18,10 @@ shoppingListRouter
   .post(requireAuth, jsonBodyParser, (req, res, next) => {
     const unverifiedIngredient = req.body
     const requiredKeys = ['name', 'amount', 'unit']
-    requiredKeys.forEach(key => {
-      if (!(key in req.body)) {
-        return res.status(400).json({ error: 'Request body must include '+key})
-      }
-    })
+    for(const field of requiredKeys) {
+      if (!req.body[field])
+        return res.status(400).json({ error: `Missing '${field}' in request body` });
+    }
     const newIngredient = {
       owner: req.user.id
     }

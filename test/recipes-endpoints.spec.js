@@ -188,9 +188,6 @@ describe('Recipe Endpoints', function () {
           .get('/api/recipes/public/2')
           .set('Authorization', helpers.makeAuthHeader())
           .expect(400)
-        /*.expect(res => {
-          console.log(res.body);
-        })*/
       })
 
       it('Public recipe Successful', () => {
@@ -198,9 +195,6 @@ describe('Recipe Endpoints', function () {
           .get('/api/recipes/public/1')
           .set('Authorization', helpers.makeAuthHeader())
           .expect(200)
-        /*.expect(res => {
-          console.log(res.body);
-        })*/
       })
     })
   })
