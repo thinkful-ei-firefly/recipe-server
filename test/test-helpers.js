@@ -68,6 +68,29 @@ function makePantryArray(){
   ]
 }
 
+function makeRatingArray(){
+  return [
+    {
+      id: 1,
+      recipe_id: 2,
+      user_id: 1,
+      score: 2
+    },
+    {
+      id: 2,
+      recipe_id: 2,
+      user_id: 1,
+      score: 3
+    },
+    {
+      id: 3,
+      recipe_id: 2,
+      user_id: 1,
+      score: 4
+    }
+  ]
+}
+
 /*function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   console.log(process.env.JWT_SECRET);
   console.log(user);
@@ -131,13 +154,28 @@ function seedIngredients(db, ingredients) {
     .insert(ingredients);
 }
 
+function seedRecipes(db, recipes) {
+  return db
+    .into('recipes')
+    .insert(recipes);
+}
+
+function seedRatings(db, ratings) {
+  return db
+    .into('ratings')
+    .insert(ratings);
+}
+
 module.exports = {
   makeKnexInstance,
   makeUsersArray,
   makeRecipeArray,
   makePantryArray,
+  makeRatingArray,
   makeAuthHeader,
   cleanTables,
   seedUsers,
   seedIngredients,
+  seedRecipes,
+  seedRatings
 }
