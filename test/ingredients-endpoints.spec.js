@@ -79,7 +79,7 @@ describe('Ingredient Endpoints', function () {
     })
   })
 
-  describe.only('PATCH /:id', () => {
+  describe('PATCH /:id', () => {
     context('PATCH Product Successful', () => {
       beforeEach('Fill roles', () => {
         return helpers.seedUsers(db, testUsers)
