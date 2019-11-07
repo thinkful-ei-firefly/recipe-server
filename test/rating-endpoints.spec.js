@@ -57,9 +57,6 @@ describe('Rating Endpoints', function () {
                 .set('Authorization', helpers.makeAuthHeader())
                 .send(test)
                 .expect(200)
-                /*.expect(res => {
-                console.log(res.body);
-                })*/
         })
     })
 

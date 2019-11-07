@@ -76,6 +76,27 @@ function makePantryArray(){
   ]
 }
 
+function makeShoppingArray(){
+  return [
+    {
+      id: 1,
+      owner: 2,
+      name: 'Sugar',
+      amount: '1/8',
+      unit: 'cup',
+      crossed: false,
+    },
+    {
+      id: 2,
+      owner: 1,
+      name: 'Salt',
+      amount: '1/4',
+      unit: 'Tbs',
+      crossed: true,
+    }
+  ]
+}
+
 function makeRatingArray(){
   return [
     {
@@ -169,16 +190,24 @@ function seedRatings(db, ratings) {
     .insert(ratings);
 }
 
+function seedShopping(db, shopping) {
+  return db
+    .into('shopping_list')
+    .insert(shopping);
+}
+
 module.exports = {
   makeKnexInstance,
   makeUsersArray,
   makeRecipeArray,
   makePantryArray,
   makeRatingArray,
+  makeShoppingArray,
   makeAuthHeader,
   cleanTables,
   seedUsers,
   seedIngredients,
   seedRecipes,
-  seedRatings
+  seedRatings,
+  seedShopping
 }
