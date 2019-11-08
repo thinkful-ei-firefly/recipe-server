@@ -20,6 +20,9 @@ ingredientsRouter
     for(const field of requiredKeys) {
       if (!req.body[field])
         return res.status(400).json({ error: `Missing '${field}' in request body` });
+      let str = field.replace(/[^\x00-\x7F]/g, '');
+      if(str !== field)
+        return res.status(400).json({error: `${field} Cannot use non-ascii characters`});
     }
     const newIngredient = {
       owner: req.user.id

@@ -20,6 +20,9 @@ recipeRouter
     for(const field of requiredKeys) {
       if (!req.body[field])
         return res.status(400).json({ error: `Missing '${field}' in request body` });
+      let str = field.replace(/[^\x00-\x7F]/g, '');
+      if(str !== field)
+        return res.status(400).json({error: `${field} Cannot use non-ascii characters`});
     }
     const keys = ['name', 'ingredients', 'instructions', 'time_to_make', 'imageurl', 'public', 'category', 'description']
     const recipe = {
