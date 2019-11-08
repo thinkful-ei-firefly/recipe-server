@@ -3,6 +3,7 @@
 const xss = require('xss');
 const bcrypt = require('bcryptjs');
 
+
 const UsersService = {
   checkPassword(password) {
     if(password.startsWith(' ') || password.endsWith(' ')) {
@@ -10,6 +11,20 @@ const UsersService = {
     }
     if (password.length < 8 || password.length > 72) {
       return 'Password must be between 8 and 72 characters';
+    }
+    let str = password.replace(/[^\x00-\x7F]/g, '');
+    if(str !== password){
+      return 'Password cannot contain non-ascii characters'
+    }
+    return null;
+  },
+  chechUsername(username){
+    let str = username.replace(/[^\x00-\x7F]/g, '');
+    if(str !== username){
+      return 'Username cannot contain non-ascii characters'
+    }
+    if (username.length > 72 || username.length < 4){
+      return 'Username must be between 4 and 72 characters'
     }
     return null;
   },

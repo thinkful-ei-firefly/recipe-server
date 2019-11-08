@@ -25,6 +25,10 @@ usersRouter
     if(passwordError) {
       return res.status(400).json({ error: passwordError });
     }
+    const usernameError = UsersService.chechUsername(user_name);
+    if(usernameError) {
+      return res.status(400).json({ error: usernameError });
+    }
 
     UsersService.hasUserWithUserName(req.app.get('db'), user_name)
       .then(userExists => {
