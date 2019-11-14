@@ -7,12 +7,12 @@ client repo: https://github.com/thinkful-ei-firefly/recipe-client
 Live app: https://good-meal-client.herokuapp.com/
 
 ## Installation
-clone github repo
-install node dependencies, "npm install"
-move example.env to .env
-create database and replace example names in .env
-migrate database, "npm run migrate"
-run api, "npm start"
+* clone github repo
+* install node dependencies, "npm install"
+* move example.env to .env
+* create database and replace example names in .env
+* migrate database, "npm run migrate"
+* run api, "npm start"
 
 ## Endpoints
 
@@ -22,6 +22,13 @@ run api, "npm start"
 
 User validation. POST username and passoword. Returns a "bad login request" or an auth token
 
+#### POST '/googlelogin'
+
+User validation, for login with google users.
+
+#### POST '/facebooklogin'
+
+User validation, for login with facebook users.
 
 ### Ingredients /api/ingredients
 
@@ -31,7 +38,7 @@ Returns the ingredients the user currently has
 
 #### POST '/'
 
-Verifys and adds an ingredient to a users cabinet/ storage
+Verifyies and adds an ingredient to a users cabinet/ storage
 
 #### DELETE '/'
 
@@ -106,13 +113,19 @@ Checks or unchecks selected item from users shopping list
 Removes specified item from users shopping list
 
 
-### Users /api/list
+### Users /api/users
 
 #### POST '/'
 
 Validates login information and creates a new user account
 
+#### POST '/google'
 
+Validates, 1st time login with google, and creates a new user account
+
+#### POST '/facebook'
+
+Validates, 1st time login with facebook, and creates a new user
 
 ### Up Load /api/upload
 
